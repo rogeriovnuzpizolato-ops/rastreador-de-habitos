@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hábitos Diários</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- CABEÇALHO -->
+    <header>
+      <div>
+        <h1>Meus <span class="destaque">Hábitos</span></h1>
+        <p id="data-hoje" class="data-hoje">carregando data...</p>
+      </div>
+      <div class="progresso-wrap">
+        <span id="progresso-texto" class="progresso-texto">0%</span>
+        <p class="progresso-label">hoje</p>
+      </div>
+    </header>
+
+    <!-- FORMULÁRIO -->
+    <div class="form-add">
+      <input
+        type="text"
+        id="input-habito"
+        placeholder="Adicionar novo hábito…"
+        maxlength="80"
+      />
+      <button id="btn-add">Adicionar</button>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="filtros">
+      <button class="filtro-btn ativo" data-filtro="todos">Todos</button>
+      <button class="filtro-btn" data-filtro="pendentes">Pendentes</button>
+      <button class="filtro-btn" data-filtro="concluidos">Concluídos</button>
+    </div>
+
+    <!-- LISTA DE HÁBITOS -->
+    <!-- Os cards serão inseridos aqui pelo JavaScript -->
+    <ul id="lista-habitos">
+
+      <!-- EXEMPLO de card (remova este bloco depois, é só referência visual) -->
+      <li class="habito-card">
+        <input type="checkbox" class="habito-check" />
+        <span class="habito-nome">Beber 2L de água</span>
+        <button class="btn-excluir">✕</button>
+      </li>
+
+      <!-- EXEMPLO de card concluído -->
+      <li class="habito-card concluido">
+        <input type="checkbox" class="habito-check" checked />
+        <span class="habito-nome">Fazer exercício</span>
+        <button class="btn-excluir">✕</button>
+      </li>
+
+    </ul>
+
+    <!-- ESTADO VAZIO (mostrar quando não houver hábitos) -->
+    <div id="estado-vazio" class="estado-vazio escondido">
+      <p>🌱</p>
+      <p>Nenhum hábito aqui. Adicione um acima!</p>
+    </div>
+
+    <!-- RODAPÉ COM CONTADORES -->
+    <footer class="stats">
+      <div class="stat">
+        <span id="stat-total" class="stat-num">0</span>
+        <span class="stat-label">total</span>
+      </div>
+      <div class="stat">
+        <span id="stat-concluidos" class="stat-num">0</span>
+        <span class="stat-label">concluídos</span>
+      </div>
+      <div class="stat">
+        <span id="stat-pendentes" class="stat-num">0</span>
+        <span class="stat-label">pendentes</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
