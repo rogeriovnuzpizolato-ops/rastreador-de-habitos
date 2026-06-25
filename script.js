@@ -20,44 +20,43 @@ function mostrarHora(){
     
 }
 
-function criaHabito(){
+function createHabit(){
     const habits= {
-        desc: inputHabit.value,
         id: Date.now(),
+        desc: inputHabit.value,
         finish: false
     };
 
     arrHabits.push(habits);
 
+   renderHabit()
 
-    listHabit.innerHTML= arrHabits.map(habit=> `
-        <li class="habito-card">
-         <input 
-         type="checkbox"
-         class="habito-check"
-         >
-         <span class="habito-nome">${habits.desc}</span>
-         <button class="btn-excluir">✕</button>
-        </li>`
-    )
-    .join("");
-
-    let li= document.querySelector(".habito-card")
-
-    const inputCheck= document.querySelectorAll(".habito-check");
-    inputCheck.forEach(check=>{
-        check.addEventListener("change", ()=>{
-            li= check.closest(".habito-card");
-
-            if(check.checked){
-                li.classList.add("concluido")
-            }else{
-                li.classList.remove("concluido")
-            }
-        });
-    });
+    inputHabit.value= "";
 }
 
-btnAdd.addEventListener("click", criaHabito)
+function renderHabit(){
+    listHabit.innerHTML= arrHabits.map(habit=>`
+        <li class="habito-card" data-id="${habit.id}">
+         <input type="checkbox" class="habito-check" />
+         <span class="habito-nome">${habit.desc}</span>
+         <button class="btn-excluir">✕</button>
+        </li>
+    `).join("");
+}
+
+listHabit.addEventListener("click", (event)=>{
+    const id= Number(event.target.parentElement.dataset.id)
+    const habitFound= arrHabits.find(habit=> habit.id === id)
+    habitFound.finish = !habitFound.finish
+    const li= event.target.parentElement;
+    li.classList.toggle("concluido");
+
+    if(event.target.className === "btn-excluir"){
+        arrHabits= arrHabits.filter((habit)=> habit.id !== id)
+        renderHabit()
+    }
+});
+
+btnAdd.addEventListener("click", createHabit)
 
 mostrarHora()
