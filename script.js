@@ -21,6 +21,8 @@ function mostrarHora(){
 }
 
 function createHabit(){
+    if(inputHabit.value === "") return;
+
     const habits= {
         id: Date.now(),
         desc: inputHabit.value,
@@ -36,8 +38,8 @@ function createHabit(){
 
 function renderHabit(){
     listHabit.innerHTML= arrHabits.map(habit=>`
-        <li class="habito-card" data-id="${habit.id}">
-         <input type="checkbox" class="habito-check" />
+        <li class="habito-card ${habit.finish? "concluido": ""}" data-id="${habit.id}">
+         <input type="checkbox" class="habito-check" ${habit.finish? "checked": ""}/>
          <span class="habito-nome">${habit.desc}</span>
          <button class="btn-excluir">✕</button>
         </li>
@@ -45,12 +47,15 @@ function renderHabit(){
 }
 
 listHabit.addEventListener("click", (event)=>{
-    const id= Number(event.target.parentElement.dataset.id)
+    const id= Number(event.target.parentElement.dataset.id);
+
+    if(event.target.className === "habito-check"){
     const habitFound= arrHabits.find(habit=> habit.id === id)
     habitFound.finish = !habitFound.finish
     const li= event.target.parentElement;
     li.classList.toggle("concluido");
-
+    }
+    
     if(event.target.className === "btn-excluir"){
         arrHabits= arrHabits.filter((habit)=> habit.id !== id)
         renderHabit()
