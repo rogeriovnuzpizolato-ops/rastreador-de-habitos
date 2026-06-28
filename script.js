@@ -109,7 +109,6 @@ btnFilter.forEach(button=> {
 
 btnAdd.addEventListener("click", ()=>{
     createHabit();
-    renderHabit()
 })
 
 
