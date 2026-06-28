@@ -6,6 +6,9 @@ const startTotal= document.getElementById("stat-total");
 const startPending= document.getElementById("stat-pendentes");
 const startDone= document.getElementById("stat-concluidos");
 const totalPercentage= document.getElementById("progresso-texto");
+const btnFilter= document.querySelectorAll(".filtro-btn");
+
+let activeFilter= "ativo";
 
 let arrHabits= []
 
@@ -41,7 +44,22 @@ function createHabit(){
 }
 
 function renderHabit(){
-    listHabit.innerHTML= arrHabits.map(habit=>`
+
+    const arrDone= arrHabits.filter(habit=> habit.finish === true);
+    const arrPending= arrHabits.filter(habit=> habit.finish === false);
+
+    let habitShow;
+
+    if(activeFilter === "todos"){
+        habitShow= arrHabits
+    }else if(activeFilter === "pendentes"){
+        habitShow= arrPending
+    }else{
+        habitShow= arrDone
+    }
+    
+
+    listHabit.innerHTML= habitShow.map(habit=>`
         <li class="habito-card ${habit.finish? "concluido": ""}" data-id="${habit.id}">
          <input type="checkbox" class="habito-check" ${habit.finish? "checked": ""}/>
          <span class="habito-nome">${habit.desc}</span>
@@ -49,8 +67,7 @@ function renderHabit(){
         </li>
     `).join("");
 
-    const arrDone= arrHabits.filter(habit=> habit.finish === true);
-    const arrPending= arrHabits.filter(habit=> habit.finish === false);
+    
 
     startTotal.innerHTML= Number(arrHabits.length);
     startPending.innerHTML= Number(arrPending.length);
@@ -81,7 +98,14 @@ listHabit.addEventListener("click", (event)=>{
     }
 });
 
-
+btnFilter.forEach(button=> {
+    button.addEventListener("click", ()=>{
+        btnFilter.forEach(btn=> btn.classList.remove("ativo"))
+        activeFilter= button.dataset.filtro;
+        button.classList.add("ativo");
+        renderHabit()
+    })
+})
 
 btnAdd.addEventListener("click", ()=>{
     createHabit();
